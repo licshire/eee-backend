@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.zenyuca.eee.mapper.UserMapper">
+
+  <resultMap id="result_user" type="club.zenyuca.eee.beans.User">
+    <id property="id" column="user_id" />
+    <result property="name" column="user_name" />
+    <result property="pwd" column="user_pwd" />
+    <result property="createTime" column="user_createTime" />
+    <result property="updateTime" column="user_updateTime" />
+    <result property="createrId" column="user_createrId" />
+    <result property="updaterId" column="user_updaterId" />
+    <result property="loginTime" column="user_loginTime" />
+    <result property="logoutTime" column="user_logoutTime" />
+  </resultMap>
+
+  <sql id="all_column_list" >
+    ${alias}id AS user_id,
+    ${alias}name AS user_name,
+    ${alias}pwd AS user_pwd,
+    ${alias}createTime AS user_createTime,
+    ${alias}updateTime AS user_updateTime,
+    ${alias}createrId AS user_createrId,
+    ${alias}updaterId AS user_updaterId,
+    ${alias}loginTime AS user_loginTime,
+    ${alias}logoutTime AS user_logoutTime    
+  </sql>
+
+  <sql id="insert_column_list" >
+    name,
+    pwd,
+    createTime,
+    updateTime,
+    createrId,
+    updaterId,
+    loginTime,
+    logoutTime
+  </sql>
+
+  <sql id="value_column_list" >
+    #{name},
+    #{pwd},
+    #{createTime},
+    #{updateTime},
+    #{createrId},
+    #{updaterId},
+    #{loginTime},
+    #{logoutTime}
+  </sql>
+
+  <sql id="where_condition">
+    <if test="id != null ">
+      AND ${alias}id = #{id}
+    </if>
+    <if test="name != null and name != ''">
+      AND ${alias}name like CONCAT('%', #{name}, '%')
+    </if>
+    <if test="pwd != null and pwd != ''">
+      AND ${alias}pwd like CONCAT('%', #{pwd}, '%')
+    </if>
+    <if test="createTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}createTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{createTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="updateTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}updateTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{updateTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="createrId != null ">
+      AND ${alias}createrId = #{createrId}
+    </if>
+    <if test="updaterId != null ">
+      AND ${alias}updaterId = #{updaterId}
+    </if>
+    <if test="loginTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}loginTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{loginTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="logoutTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}logoutTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{logoutTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+  </sql>
+
+  <sql id="load_where_condition">
+    <if test="name != null and name != ''">
+      AND ${alias}name = #{name}
+    </if>
+    <if test="pwd != null and pwd != ''">
+      AND ${alias}pwd = #{pwd}
+    </if>
+    <if test="createTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}createTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{createTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="updateTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}updateTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{updateTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="createrId != null ">
+      AND ${alias}createrId = #{createrId}
+    </if>
+    <if test="updaterId != null ">
+      AND ${alias}updaterId = #{updaterId}
+    </if>
+    <if test="loginTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}loginTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{loginTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+    <if test="logoutTime != null ">
+      <![CDATA[
+        AND DATE_FORMAT(${alias}logoutTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{logoutTime}, '%Y-%m-%d %H:%i:%s');
+      ]]>
+    </if>
+  </sql>
+
+  <select id="findAll" resultMap="result_user" parameterType="club.zenyuca.eee.beans.User">
+    SELECT
+      <include refid="all_column_list">
+        <property name="alias" value=""/>
+      </include>
+    FROM core_user
+    <where>
+      <include refid="where_condition">
+        <property name="alias" value=""/>
+      </include>
+    </where>
+    ORDER BY id DESC
+  </select>
+
+  <select id="listPage" resultMap="result_user" parameterType="club.zenyuca.eee.beans.User">
+    SELECT
+      <include refid="all_column_list">
+        <property name="alias" value=""/>
+      </include>
+    FROM core_user
+    <where>
+      <include refid="where_condition">
+        <property name="alias" value=""/>
+      </include>
+    </where>
+    ORDER BY id DESC
+  </select>
+
+  <select id="load" resultMap="result_user" parameterType="club.zenyuca.eee.beans.User">
+    SELECT
+      <include refid="all_column_list">
+        <property name="alias" value=""/>
+      </include>
+    FROM core_user
+    <where>
+      <include refid="load_where_condition">
+        <property name="alias" value=""/>
+      </include>
+    </where>
+  </select>
+  
+  <select id="loadByPK" resultMap="result_user" parameterType="java.lang.Integer">
+    SELECT
+      <include refid="all_column_list">
+        <property name="alias" value=""/>
+      </include>
+    FROM core_user
+    WHERE id = #{id}
+  </select>
+
+  <select id="findByPKs" resultMap="result_user" parameterType="java.lang.Integer">
+    SELECT
+      <include refid="all_column_list">
+        <property name="alias" value=""/>
+      </include> 
+    FROM core_user
+    WHERE id IN
+    <foreach collection="array" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+  
+  <insert id="insert" parameterType="club.zenyuca.eee.beans.User" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO core_user (
+      <include refid="insert_column_list">
+        <property name="alias" value=""/>
+      </include> 
+    )VALUES(
+      <include refid="value_column_list"></include>
+    )
+  </insert>
+
+  <update id="update" parameterType="club.zenyuca.eee.beans.User">
+    UPDATE core_user SET 
+      <if test="id != null ">
+        id = #{id},
+      </if>
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="pwd != null and pwd != ''">
+        pwd = #{pwd},
+      </if>
+      <if test="createTime != null ">
+        createTime = #{createTime},
+      </if>
+      <if test="updateTime != null ">
+        updateTime = #{updateTime},
+      </if>
+      <if test="createrId != null ">
+        createrId = #{createrId},
+      </if>
+      <if test="updaterId != null ">
+        updaterId = #{updaterId},
+      </if>
+      <if test="loginTime != null ">
+        loginTime = #{loginTime},
+      </if>
+      <if test="logoutTime != null ">
+        logoutTime = #{logoutTime},
+      </if> 
+      id = #{id}
+    WHERE id = #{id}
+  </update>
+
+  <delete id="delete" parameterType="Integer">
+    DELETE FROM core_user WHERE id = #{id}
+  </delete>
+  
+  <!-- 手动增加区 -->
+  
+</mapper>
