@@ -12,6 +12,8 @@
     <result property="updaterId" column="user_updaterId" />
     <result property="loginTime" column="user_loginTime" />
     <result property="logoutTime" column="user_logoutTime" />
+    <result property="registerIP" column="user_registerIP" />
+    <result property="loginIP" column="user_loginIP" />
   </resultMap>
 
   <sql id="all_column_list" >
@@ -23,7 +25,9 @@
     ${alias}createrId AS user_createrId,
     ${alias}updaterId AS user_updaterId,
     ${alias}loginTime AS user_loginTime,
-    ${alias}logoutTime AS user_logoutTime    
+    ${alias}logoutTime AS user_logoutTime,
+    ${alias}registerIP AS user_registerIP,
+    ${alias}loginIP AS user_loginIP    
   </sql>
 
   <sql id="insert_column_list" >
@@ -34,7 +38,9 @@
     createrId,
     updaterId,
     loginTime,
-    logoutTime
+    logoutTime,
+    registerIP,
+    loginIP
   </sql>
 
   <sql id="value_column_list" >
@@ -45,7 +51,9 @@
     #{createrId},
     #{updaterId},
     #{loginTime},
-    #{logoutTime}
+    #{logoutTime},
+    #{registerIP},
+    #{loginIP}
   </sql>
 
   <sql id="where_condition">
@@ -84,6 +92,12 @@
         AND DATE_FORMAT(${alias}logoutTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{logoutTime}, '%Y-%m-%d %H:%i:%s');
       ]]>
     </if>
+    <if test="registerIP != null and registerIP != ''">
+      AND ${alias}registerIP like CONCAT('%', #{registerIP}, '%')
+    </if>
+    <if test="loginIP != null and loginIP != ''">
+      AND ${alias}loginIP like CONCAT('%', #{loginIP}, '%')
+    </if>
   </sql>
 
   <sql id="load_where_condition">
@@ -118,6 +132,12 @@
       <![CDATA[
         AND DATE_FORMAT(${alias}logoutTime, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(#{logoutTime}, '%Y-%m-%d %H:%i:%s');
       ]]>
+    </if>
+    <if test="registerIP != null and registerIP != ''">
+      AND ${alias}registerIP = #{registerIP}
+    </if>
+    <if test="loginIP != null and loginIP != ''">
+      AND ${alias}loginIP = #{loginIP}
     </if>
   </sql>
 
@@ -221,6 +241,12 @@
       </if>
       <if test="logoutTime != null ">
         logoutTime = #{logoutTime},
+      </if>
+      <if test="registerIP != null and registerIP != ''">
+        registerIP = #{registerIP},
+      </if>
+      <if test="loginIP != null and loginIP != ''">
+        loginIP = #{loginIP},
       </if> 
       id = #{id}
     WHERE id = #{id}

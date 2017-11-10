@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2017-11-10 00:40:11
+Date: 2017-11-10 09:56:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,5 +29,7 @@ CREATE TABLE `core_user` (
   `updaterId` int(11) DEFAULT NULL,
   `loginTime` datetime DEFAULT NULL COMMENT '最近一次登陆时间',
   `logoutTime` datetime DEFAULT NULL COMMENT '最近一次登出时间',
+  `registerIP` varchar(255) DEFAULT NULL COMMENT '注册时的IP',
+  `loginIP` varchar(255) DEFAULT NULL COMMENT '最后一次登录的IP',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

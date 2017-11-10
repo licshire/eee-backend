@@ -12,6 +12,14 @@ public class User extends BaseBean implements Serializable {
     private String name;
     /** 密码 */
     private String pwd;
+    /** 最近一次登陆时间 */
+    private Date loginTime;
+    /** 最近一次登出时间 */
+    private Date logoutTime;
+    /** 注册时的IP */
+    private String registerIP;
+    /** 最后一次登录的IP */
+    private String loginIP;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -57,9 +65,32 @@ public class User extends BaseBean implements Serializable {
         this.logoutTime = logoutTime;
     }
 
-    /** 最近一次登陆时间 */
-    private Date loginTime;
-    /** 最近一次登出时间 */
-    private Date logoutTime;
+    public String getRegisterIP() {
+        return registerIP;
+    }
 
+    public void setRegisterIP(String registerIP) {
+        this.registerIP = registerIP;
+    }
+
+    public String getLoginIP() {
+        return loginIP;
+    }
+
+    public void setLoginIP(String loginIP) {
+        this.loginIP = loginIP;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", loginTime=" + loginTime +
+                ", logoutTime=" + logoutTime +
+                ", registerIP='" + registerIP + '\'' +
+                ", loginIP='" + loginIP + '\'' +
+                '}';
+    }
 }
